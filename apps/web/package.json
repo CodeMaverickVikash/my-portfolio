@@ -4,25 +4,23 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "next dev --port 3000",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint --max-warnings 0",
-    "check-types": "next typegen && tsc --noEmit"
+    "dev": "pnpm --filter @repo/shared build && vite --host 0.0.0.0 --port 3000",
+    "build": "pnpm --filter @repo/shared build && tsc --noEmit && vite build",
+    "preview": "vite preview --host 0.0.0.0 --port 3000",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@repo/shared": "workspace:*",
     "@repo/ui": "workspace:*",
-    "next": "16.2.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
     "@types/node": "^22.15.3",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
-    "eslint": "^9.39.1",
+    "@vitejs/plugin-react": "^5.1.0",
+    "vite": "^7.1.7",
     "typescript": "5.9.2"
   }
 }
