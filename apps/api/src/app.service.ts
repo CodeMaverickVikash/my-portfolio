@@ -1,18 +1,18 @@
-import { API_NAME } from "@repo/shared";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class AppService {
   getRoot() {
     return {
-      name: API_NAME,
+      success: true,
+      name: "vk-portfolio-api",
       message: "NestJS API is running",
     };
   }
 
   getHealth() {
     return {
-      status: "ok",
+      status: "OK",
       timestamp: new Date().toISOString(),
     };
   }

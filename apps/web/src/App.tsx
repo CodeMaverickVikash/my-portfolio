@@ -1,112 +1,84 @@
-import { useEffect, useState } from "react";
+import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useDarkMode } from './hooks';
+import { MainLayout } from './layouts';
+import { Home, Profile, Contact, TechStack, Login, TechDetail } from './pages';
+import { ProtectedRoute } from './components';
+import { ROUTES } from './constants';
+import { AuthProvider } from './context/AuthContext';
+// Backend Admin UI
+import { AdminDashboard, AdminTechStack, AdminTechStackForm, AdminProfile } from './admin';
 
-import {
-  API_NAME,
-  API_PREFIX,
-  APP_NAME,
-  getApiBaseUrl,
-  getApiHealthUrl,
-} from "@repo/shared";
-import { Button } from "@repo/ui/button";
-import { Card } from "@repo/ui/card";
-import { Code } from "@repo/ui/code";
-
-const features = [
-  "Vite-powered React frontend",
-  "NestJS API mounted in the same Turborepo",
-  "Shared packages for UI and constants",
-];
-
-interface HealthResponse {
-  status: string;
-  timestamp: string;
-}
-
-export default function App() {
-  const apiBaseUrl = getApiBaseUrl(import.meta.env.VITE_API_BASE_URL);
-  const [health, setHealth] = useState<HealthResponse | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    let isActive = true;
-
-    async function loadHealth() {
-      try {
-        const response = await fetch(getApiHealthUrl(import.meta.env.VITE_API_BASE_URL));
-
-        if (!response.ok) {
-          throw new Error(`API request failed with ${response.status}`);
-        }
-
-        const payload = (await response.json()) as HealthResponse;
-
-        if (isActive) {
-          setHealth(payload);
-          setError(null);
-        }
-      } catch (fetchError) {
-        if (isActive) {
-          setError(fetchError instanceof Error ? fetchError.message : "Unable to reach the API");
-        }
-      }
-    }
-
-    void loadHealth();
-
-    return () => {
-      isActive = false;
-    };
-  }, []);
+function App() {
+  const [isDarkModeEnabled, toggleDarkMode] = useDarkMode();
 
   return (
-    <main className="page-shell">
-      <section className="hero">
-        <p className="eyebrow">{APP_NAME}</p>
-        <h1>React for web. NestJS for API. One monorepo.</h1>
-        <p className="hero-copy">
-          The frontend is ready for Vercel and the API is exposed from{" "}
-          <Code>{API_PREFIX}</Code> with a shared configuration package.
-        </p>
-        <div className="hero-actions">
-          <Button appName="web" className="primary-button">
-            Test shared UI button
-          </Button>
-          <a
-            className="secondary-link"
-            href={apiBaseUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Open API
-          </a>
-        </div>
-        <div className="status-card">
-          <strong>{API_NAME}</strong>
-          <p>
-            Base URL: <Code>{apiBaseUrl}</Code>
-          </p>
-          <p>
-            Health:{" "}
-            <span className={health ? "status-ok" : "status-pending"}>
-              {health ? `${health.status} at ${new Date(health.timestamp).toLocaleString()}` : "Checking..."}
-            </span>
-          </p>
-          {error ? <p className="status-error">{error}</p> : null}
-        </div>
-      </section>
+    <div className={`home-wrapper ${isDarkModeEnabled ? 'dark' : ''}`}>
+      <AuthProvider>
+        <Router>
+          <Routes>
+            {/* Public Routes with MainLayout */}
+            <Route path={ROUTES.HOME} element={
+              <MainLayout isDarkModeEnabled={isDarkModeEnabled} onToggleDarkMode={toggleDarkMode}>
+                <Home />
+              </MainLayout>
+            } />
+            <Route path={ROUTES.PROFILE} element={
+              <MainLayout isDarkModeEnabled={isDarkModeEnabled} onToggleDarkMode={toggleDarkMode}>
+                <Profile />
+              </MainLayout>
+            } />
+            <Route path={ROUTES.CONTACT} element={
+              <MainLayout isDarkModeEnabled={isDarkModeEnabled} onToggleDarkMode={toggleDarkMode}>
+                <Contact />
+              </MainLayout>
+            } />
+            <Route path={ROUTES.TECH_STACK} element={
+              <MainLayout isDarkModeEnabled={isDarkModeEnabled} onToggleDarkMode={toggleDarkMode}>
+                <TechStack />
+              </MainLayout>
+            } />
+            <Route path={ROUTES.TECH_DETAIL} element={
+              <MainLayout isDarkModeEnabled={isDarkModeEnabled} onToggleDarkMode={toggleDarkMode}>
+                <TechDetail />
+              </MainLayout>
+            } />
 
-      <section className="grid">
-        {features.map((feature) => (
-          <Card
-            key={feature}
-            className="feature-card"
-            href="https://turbo.build/repo/docs"
-            title={feature}
-          >
-            Ready for building your portfolio pages and backend routes.
-          </Card>
-        ))}
-      </section>
-    </main>
+            {/* Login Route (No Layout) */}
+            <Route path={ROUTES.LOGIN} element={<Login />} />
+
+            {/* Protected Admin Routes (Backend UI - Has its own AdminLayout) */}
+            <Route path={ROUTES.ADMIN_DASHBOARD} element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            } />
+            <Route path={ROUTES.ADMIN_TECH_STACK} element={
+              <ProtectedRoute>
+                <AdminTechStack />
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/tech-stack/add" element={
+              <ProtectedRoute>
+                <AdminTechStackForm />
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/tech-stack/edit/:id" element={
+              <ProtectedRoute>
+                <AdminTechStackForm />
+              </ProtectedRoute>
+            } />
+            <Route path={ROUTES.ADMIN_PROFILE} element={
+              <ProtectedRoute>
+                <AdminProfile />
+              </ProtectedRoute>
+            } />
+          </Routes>
+        </Router>
+      </AuthProvider>
+    </div>
   );
 }
+
+export default App;
+

@@ -3,7 +3,7 @@
 This workspace is set up with:
 
 - `apps/web`: Vite + React frontend
-- `apps/api`: NestJS API
+- `apps/api`: NestJS API using Prisma + PostgreSQL
 - `packages/ui`: shared UI components
 - `packages/shared`: shared constants and API helpers
 
@@ -59,13 +59,14 @@ VITE_API_BASE_URL=https://your-api-project.vercel.app/api
 
 - Root Directory: `apps/api`
 - The included `vercel.json` routes all requests to the Nest serverless function in `api/index.ts`
-- Environment variable:
+- Environment variables:
 
 ```sh
-CORS_ORIGIN=https://your-frontend-project.vercel.app
+DATABASE_URL=postgresql://USER:PASSWORD@HOST:5432/DB_NAME?schema=public
+CLIENT_URL=https://your-frontend-project.vercel.app
 ```
 
-You can provide multiple frontend origins by separating them with commas.
+You can provide multiple frontend origins in `CLIENT_URL` by separating them with commas.
 
 ## Useful commands
 

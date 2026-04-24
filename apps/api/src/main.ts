@@ -1,22 +1,8 @@
-import { API_PREFIX } from "@repo/shared";
-import { NestFactory } from "@nestjs/core";
-
-import { AppModule } from "./app.module";
+import { createNestApplication } from "./bootstrap";
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-
-  const allowedOrigins = process.env.CORS_ORIGIN?.split(",")
-    .map((origin) => origin.trim())
-    .filter(Boolean);
-
-  app.enableCors({
-    origin: allowedOrigins?.length ? allowedOrigins : true,
-  });
-
-  app.setGlobalPrefix(API_PREFIX);
-
-  await app.listen(3001);
+  const app = await createNestApplication();
+  await app.listen(process.env.PORT || 3001);
 }
 
 void bootstrap();
