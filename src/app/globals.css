@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@source "../../../../packages/common/src";
+@source "../../../../packages/my-portfolio/src";
+
+@theme {
+  --color-forest: #0d9488;
+  --color-forest-strong: #0f766e;
+  --color-sage: #ccfbf1;
+  --color-cream: #f0fdfa;
+  --color-crimson: #ef4444;
+  --color-surface-0: #f5f3ef;
+  --color-surface-1: #fefcf8;
+  --color-surface-2: #eceae5;
+  --color-ink-1: #302e2b;
+  --color-ink-2: #65605a;
+  --color-ink-3: #9a948d;
+  --color-line: #ddd9d2;
+}
+
+body {
+  background-color: var(--color-surface-0);
+  color: var(--color-ink-1);
+}

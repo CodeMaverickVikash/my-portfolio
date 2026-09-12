@@ -1,0 +1,5 @@
+{"timestamp":"00:00:04.772","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:00:07.811","source":"Server","level":"LOG","message":"○ Compiling /[[...path]] ..."}
+{"timestamp":"00:00:24.106","source":"Browser","level":"INFO","message":"%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"}
+{"timestamp":"00:00:42.029","source":"Server","level":"LOG","message":"○ Compiling /api/portfolio/skills ..."}
+{"timestamp":"00:06:44.468","source":"Browser","level":"INFO","message":"%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"}
