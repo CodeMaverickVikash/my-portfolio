@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { PortfolioApp } from '@mypartner/my-portfolio'
+import { PortfolioApp } from '@/features/portfolio'
 
 const readPath = () => window.location.pathname.replace(/\/+$/, '') || '/'
 

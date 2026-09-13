@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
-@source "../../../../packages/common/src";
-@source "../../../../packages/my-portfolio/src";
+@source "../features/portfolio";
 
 @theme {
   --color-forest: #0d9488;

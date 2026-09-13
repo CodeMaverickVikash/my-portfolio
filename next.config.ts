@@ -1,7 +1,5 @@
 import type { NextConfig } from 'next'
 
-const nextConfig: NextConfig = {
-  transpilePackages: ['@mypartner/common', '@mypartner/my-portfolio'],
-}
+const nextConfig: NextConfig = {}
 
 export default nextConfig
