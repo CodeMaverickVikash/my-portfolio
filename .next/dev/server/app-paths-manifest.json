@@ -1,4 +1,0 @@
-{
-  "/api/portfolio/skills/route": "app/api/portfolio/skills/route.js",
-  "/[[...path]]/page": "app/[[...path]]/page.js"
-}
