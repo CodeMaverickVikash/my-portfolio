@@ -45,16 +45,6 @@ const Navbar = ({ path, basePath, onNavigate }: PortfolioNavigationProps) => {
           <NavbarLogo />
         </button>
 
-        <button
-          type="button"
-          onClick={() => navigate('/login')}
-          className="ml-auto flex h-9 items-center justify-center gap-1.5 rounded-lg border border-line px-2.5 text-xs font-semibold text-ink-2 transition-colors hover:bg-surface-2 hover:text-forest cursor-pointer md:ml-4"
-          title="Return to myPartner"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          <span className="hidden sm:inline">myPartner</span>
-        </button>
-
         <nav className="ml-auto hidden items-center gap-1 md:flex">
           {items.map(item => {
             const Icon = navIcons[item.label as keyof typeof navIcons]
